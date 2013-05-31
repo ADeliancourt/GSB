@@ -1,0 +1,306 @@
+-------------------------------------------------------------
+-- MDB Tools - A library for reading MS Access database files
+-- Copyright (C) 2000-2004 Brian Bruns
+-- Files in libmdb are licensed under LGPL and the utilities under
+-- the GPL, see COPYING.LIB and COPYING files respectively.
+-- Check out http://mdbtools.sourceforge.net
+-------------------------------------------------------------
+
+DROP TABLE ACTIVITE_COMPL;
+CREATE TABLE ACTIVITE_COMPL
+ (
+	AC_NUM				Int primary key, 
+	AC_DATE				DateTime, 
+	AC_LIEU				varchar(50), 
+	AC_THEME			varchar(20), 
+	AC_MOTIF			varchar(100)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE COMPOSANT;
+CREATE TABLE COMPOSANT
+ (
+	CMP_CODE			varchar(8), 
+	CMP_LIBELLE			varchar(50)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE DOSAGE;
+CREATE TABLE DOSAGE
+ (
+	DOS_CODE			varchar(20), 
+	DOS_QUANTITE			varchar(20), 
+	DOS_UNITE			varchar(20)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE FAMILLE;
+CREATE TABLE FAMILLE
+ (
+	FAM_CODE			varchar(6), 
+	FAM_LIBELLE			varchar(160)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE FORMULER;
+CREATE TABLE FORMULER
+ (
+	MED_DEPOTLEGAL			varchar(20), 
+	PRE_CODE			varchar(4)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE INTERAGIR;
+CREATE TABLE INTERAGIR
+ (
+	MED_PERTURBATEUR		varchar(20), 
+	MED_MED_PERTURBE		varchar(20)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE INVITER;
+CREATE TABLE INVITER
+ (
+	AC_NUM				Int, 
+	PRA_CODE				Int, 
+	SPECIALISATION			Boolean,
+PRIMARY KEY(AC_NUM,PRA_CODE)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE MEDICAMENT;
+CREATE TABLE MEDICAMENT
+ (
+	MED_DEPOTLEGAL			varchar(20) primary key, 
+	MED_NOMCOMMERCIAL		varchar(50), 
+	FAM_CODE			varchar(6), 
+	MED_COMPOSITION			varchar(510), 
+	MED_EFFETS			varchar(510), 
+	MED_CONTREINDIC			varchar(510), 
+	MED_PRIXECHANTILLON		float
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE OFFRIR;
+CREATE TABLE OFFRIR
+ (
+	VIS_MATRICULE			varchar(20), 
+	RAP_NUM				Int, 
+	MED_DEPOTLEGAL			varchar(20), 
+	OFF_QTE				Int,
+	PRIMARY KEY(MED_DEPOTLEGAL,VIS_MATRICULE,RAP_NUM);
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE PRATICIEN;
+CREATE TABLE PRATICIEN
+ (
+	PRA_CODE				Int primary key, 
+	PRA_NOM				varchar(50), 
+	PRA_PRENOM			varchar(60), 
+	PRA_ADRESSE			varchar(100), 
+	PRA_CP				varchar(10), 
+	PRA_VILLE			varchar(50), 
+	PRA_COEFNOTORIETE		float, 
+	TYP_CODE			varchar(6)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE PRESCRIRE;
+CREATE TABLE PRESCRIRE
+ (
+	MED_DEPOTLEGAL			varchar(20), 
+	TIN_CODE			varchar(10), 
+	DOS_CODE			varchar(20), 
+	PRE_POSOLOGIE			varchar(80)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE PRESENTATION;
+CREATE TABLE PRESENTATION
+ (
+	PRE_CODE			varchar(4), 
+	PRE_LIBELLE			varchar(40)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE RAPPORT_VISITE;
+CREATE TABLE RAPPORT_VISITE
+ (
+	VIS_MATRICULE			varchar(20), 
+	RAP_NUM				Int, 
+	PRA_CODE				Int, 
+	RAP_DATE			DateTime, 
+	RAP_BILAN			varchar(510), 
+	RAP_MOTIF			varchar(510)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE REALISER;
+CREATE TABLE REALISER
+ (
+	AC_NUM				Int, 
+	VIS_MATRICULE			varchar(20), 
+	REA_MTTFRAIS			float,
+PRIMARY KEY(AC_NUM,VIS_MATRICULE)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE SECTEUR;
+CREATE TABLE SECTEUR
+ (
+	SEC_CODE			varchar(2) primary key, 
+	SEC_LIBELLE			varchar(30)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE SPECIALITE;
+CREATE TABLE SPECIALITE
+ (
+	SPE_CODE			varchar(10), 
+	SPE_LIBELLE			varchar(300)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE Switchboard Items;
+CREATE TABLE Switchboard Items
+ (
+	SwitchboardID			Int, 
+	ItemNumber			Int, 
+	ItemText			varchar(510), 
+	Command				Int, 
+	Argument			varchar(510)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE TYPE_INDIVIDU;
+CREATE TABLE TYPE_INDIVIDU
+ (
+	TIN_CODE			varchar(10), 
+	TIN_LIBELLE			varchar(100)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE TYPE_PRATICIEN;
+CREATE TABLE TYPE_PRATICIEN
+ (
+	TYP_CODE			varchar(6), 
+	TYP_LIBELLE			varchar(50), 
+	TYP_LIEU			varchar(70)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE VISITEUR;
+CREATE TABLE VISITEUR
+ (
+	VIS_MATRICULE			varchar(20) primary key, 
+	VIS_NOM				varchar(50), 
+	VIS_PRENOM			varchar(100), 
+	VIS_ADRESSE			varchar(100), 
+	VIS_CP				varchar(10), 
+	VIS_VILLE			varchar(60), 
+	VIS_DATEEMBAUCHE		DateTime, 
+	SEC_CODE			varchar(2), 
+	LAB_CODE			varchar(4),
+	DEP_CODE			varchar(3)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE CONSTITUER;
+CREATE TABLE CONSTITUER
+ (
+	MED_DEPOTLEGAL			varchar(20), 
+	CMP_CODE			varchar(8), 
+	CST_QTE				float
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE LABO;
+CREATE TABLE LABO
+ (
+	LAB_CODE			varchar(4), 
+	LAB_NOM				varchar(20), 
+	LAB_CHEFVENTE			varchar(40)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE POSSEDER;
+CREATE TABLE POSSEDER
+ (
+	PRA_CODE				Int, 
+	SPE_CODE			varchar(10), 
+	POS_DIPLOME			varchar(20), 
+	POS_COEFPRESCRIPTION		float
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE REGION;
+CREATE TABLE REGION
+ (
+	REG_CODE			varchar(4), 
+	SEC_CODE			varchar(2), 
+	REG_NOM				varchar(100),
+	primary key(REG_CODE)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE TRAVAILLER;
+CREATE TABLE TRAVAILLER
+ (
+	VIS_MATRICULE			varchar(20), 
+	JJMMAA				DateTime, 
+	REG_CODE			varchar(4), 
+	TRA_ROLE			varchar(22),
+	PRIMARY KEY(VIS_MATRICULE,JJMMAA,REG_CODE)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+DROP TABLE DEPARTEMENT;
+CREATE TABLE DEPARTEMENT
+ (
+	DEP_CODE			varchar(3),
+	DEP_NOM				varchar(30),
+	DEP_CHEFVENTE			varchar(20)
+	PRIMARY KEY(DEP_CODE)
+)engine=innodb;
+-- CREATE ANY INDEXES ...
+
+
+
+-- CREATE ANY Relationships ...
+
+-- relationships are not supported for access
+
+
+-- --------------------Region--------------------
+ALTER TABLE REGION
+ADD CONSTRAINT FK_REGION_SECTEUR
+FOREIGN KEY (SEG_CODE) REFERENCES SECTEUR (SEG_CODE)engine=innodb;
+
+-- -------------------Travailler----------------------
+ALTER TABLE TRAVAILLER
+ADD CONSTRAINT FK_TRAVAILLER_VISITEUR
+FOREIGN KEY (VIS_MATRICULE) REFERENCES VISITEUR (VIS_MATRICULE);
+
+ALTER TABLE TRAVAILLER
+ADD CONSTRAINT FK_TRAVAILLER_REGION
+FOREIGN KEY (REG_CODE) REFERENCES REGION (REG_CODE);
+
+-- -------------------Visiteur----------------------
+ALTER TABLE VISITEUR
+ADD CONSTRAINT FK_VISITEUR_DEPARTEMENT
+FOREIGN KEY (DEP_CODE) REFERENCES DEPARTEMENT (DEP_CODE);
+
+-- -------------------Offrir----------------------
+ALTER TABLE OFFRIR
+ADD CONSTRAINT FK_OFFRIR_MEDICAMENT
+FOREIGN KEY (MED_DEPOTLEGAL) REFERENCES MEDICAMENT(MED_DEPOTLEGAL);
+
+ALTER TABLE OFFRIR
+ADD CONSTRAINT FK_OFFRIR_RAPPORT_VISITEUR
+FOREIGN KEY (VIS_MATRICULE,RAP_NUM) REFERENCES RAPPORT_VISITE(VIS_MATRICULE,RAP_NUM);
+
+-- -------------------Rapport Visite----------------------
+ALTER TABLE RAPPORT_VISITE
+ADD CONSTRAINT FK_RAPPORT_VISITE_PRATITIEN
+FOREIGN KEY (PRA_CODE) REFERENCES PRATICIEN(PRA_CODE);
